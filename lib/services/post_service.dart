@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../models/comment.dart';
 import '../models/post.dart';
 import '../widgets/notification.dart';
 
@@ -23,6 +24,16 @@ class PostService {
       return Post.fromMap(response.data!);
     } catch (error) {
       showNotification('Error getting post', error.toString());
+      return null;
+    }
+  }
+
+  Future<List<Comment>?> getComments(int postId) async {
+    try {
+      final response = await _dio.get<List>('/posts/$postId/comments');
+      return response.data!.map((e) => Comment.fromMap(e)).toList();
+    } catch (error) {
+      showNotification('Error getting comments', error.toString());
       return null;
     }
   }

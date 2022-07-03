@@ -4,16 +4,13 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 import '../../../models/comment.dart';
 import '../../../models/post.dart';
-import '../../../services/comment_service.dart';
 import '../../../services/post_service.dart';
 
 part 'post_state.dart';
 
 class PostCubit extends Cubit<PostState> {
-  final CommentService commentRepository;
   final PostService postRepository;
-  PostCubit(this.postRepository, this.commentRepository)
-      : super(PostLoading()) {
+  PostCubit(this.postRepository) : super(PostLoading()) {
     loadPost();
   }
 
@@ -22,7 +19,7 @@ class PostCubit extends Cubit<PostState> {
     try {
       final postId = QR.params['postId']!.asInt!;
       final post = await postRepository.getPost(postId);
-      final comments = await commentRepository.getComments(postId);
+      final comments = await postRepository.getComments(postId);
 
       if (post == null || comments == null) {
         emit(PostError('Error loading post'));

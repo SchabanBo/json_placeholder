@@ -15,7 +15,7 @@ class PostWidget extends StatelessWidget {
       children: const [
         _PostInfo(),
         SizedBox(height: 8),
-        Expanded(child: _Comments()),
+        Expanded(child: Card(elevation: 5, child: _Comments())),
       ],
     );
   }
@@ -37,6 +37,10 @@ class _PostInfo extends StatelessWidget {
               post.title,
               style: const TextStyle(fontSize: 18),
             ),
+            Text(
+              post.body,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
             Align(
               alignment: Alignment.centerRight,
               child: InkWell(
@@ -48,10 +52,6 @@ class _PostInfo extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Text(
-              post.body,
-              style: Theme.of(context).textTheme.bodyText2,
             ),
           ],
         ),
